@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'; // Se você tiver estilos globais
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importação do CSS do Bootstrap
+import './index.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
