@@ -142,40 +142,40 @@ footer p {
                 <img src="caneca-amarela-flork-melhor-vovo-avo-perfeita-flork.webp" alt="Xícara 1">
                 <h3>Modelo Clássico</h3>
                 <p> R$ 35,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Modelo Clássico" data-price="35.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Modelo Clássico" data-price="35.00" data-image="caneca-amarela-flork-melhor-vovo-avo-perfeita-flork.webp">Adicionar ao Carrinho</button>
             </div>
             <div class="col-md-4">
-                <img src="xicara-personalizacao/caneca-magica-divertida-criativa-para-contadores-com-nome-contabeis.webp" alt="Xícara 2">
+                <img src="frioquente.png" alt="Xícara 2">
                 <h3>Modelo Moderno</h3>
                 <p> R$ 40,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Modelo Moderno" data-price="40.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Modelo Moderno" data-price="40.00" data-image="frioquente.png" >Adicionar ao Carrinho</button>
             </div>
             <div class="col-md-4">
                 <img src="xicara-personalizacao/BlackandBluemug.webp" alt="Xícara 3">
                 <h3>Modelo Elegante</h3>
                 <p> R$ 45,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Modelo Elegante" data-price="45.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Modelo Elegante" data-price="45.00" data-image="xicara-personalizacao/BlackandBluemug.webp">Adicionar ao Carrinho</button>
             </div>
             <h2  >Mais Vendidos </h2>
             <div class="col-md-4">
                 <img src="imagens/caneca-flork-rosa-melhor-mae-do-mundo-74i-dia-das-maes.webp" alt="Xícara 4">
                 <h3>Flork</h3>
                 <p> R$ 35,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Flork" data-price="35.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Flork" data-price="35.00" data-image="imagens/caneca-flork-rosa-melhor-mae-do-mundo-74i-dia-das-maes.webp">Adicionar ao Carrinho</button>
                 
             </div>
             <div class="col-md-4">
                 <img src="71kmFzd7U8L._SX569_.jpg" alt="Xícara 5">
                 <h3>Heróis</h3>
                 <p> R$ 35,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Heróis" data-price="35.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Heróis" data-price="35.00" data-image="71kmFzd7U8L._SX569_.jpg">Adicionar ao Carrinho</button>
             </div>
 
             <div class="col-md-4">
                 <img src="Captura de tela_28-9-2024_204237_www.bing.com.jpeg" alt="Xícara 4">
                 <h3>Jogo do amor</h3>
                 <p> R$ 55,00</p>
-                <button class="btn btn-primary addToCartBtn" data-name="Jogo do amor" data-price="55.00">Adicionar ao Carrinho</button>
+                <button class="btn btn-primary addToCartBtn" data-name="Jogo do amor" data-price="55.00" data-image="Captura de tela_28-9-2024_204237_www.bing.com.jpeg">Adicionar ao Carrinho</button>
                 
             </div>
             <!-- exibe o carrinho de produtos-->
@@ -195,61 +195,94 @@ footer p {
 
     <!--adicionar ao carrinho-->
     <script>
-        // variaveis
-        let cart = [];
+        // Variáveis
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; // Carregar o carrinho do localStorage ou criar um vazio
         const cartCountE1 = document.getElementById('cartCount'); // Contador de itens
         const cartTotalE1 = document.getElementById('cartTotal'); // Total do carrinho
         const cartItemsE1 = document.getElementById('cartItems'); // Itens do carrinho
-
+    
+        // Função para salvar o carrinho no localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+    
         // Função para atualizar a interface do carrinho
-
         function updateCart() {
-            cartCountE1 ? cartCountE1.innerText = cart.length : null ;
+            cartCountE1 ? cartCountE1.innerText = cart.length : null;
             let total = 0;
             cartItemsE1.innerHTML = ''; // Limpar a lista de itens do carrinho
-
-            
+    
             // Adicionar cada item do carrinho à lista
-            cart.forEach(item => {
-                total += parseFloat(item.price); // Somar o preço  de cada item ao total
+            cart.forEach((item, index) => {
+                total += parseFloat(item.price); // Somar o preço de cada item ao total
+                
                 const li = document.createElement('li');
-                li.classList.add('list-group-item');
-                li.innerText = `${item.name} - R$ ${parseFloat(item.price). toFixed(2)}`;
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                
+                // Criar o elemento da imagem
+                const img = document.createElement('img');
+                img.src = item.image; // Usar a imagem do item
+                img.style.width = '50px'; // Tamanho da imagem
+                img.style.marginRight = '10px';
+    
+                // Criar o texto do item
+                const itemText = document.createElement('span');
+                itemText.innerText = `${item.name} - R$ ${parseFloat(item.price).toFixed(2)}`;
+    
+                // Botão de remover
+                const removeBtn = document.createElement('button');
+                removeBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+                removeBtn.innerText = 'Remover';
+                removeBtn.onclick = function() {
+                    removeFromCart(index); // Remover item do carrinho
+                };
+    
+                // Adicionar tudo ao item da lista
+                li.appendChild(img);
+                li.appendChild(itemText);
+                li.appendChild(removeBtn);
                 cartItemsE1.appendChild(li); // Exibir o item no carrinho
             });
-
-            // exibir total no carrinho
+    
+            // Exibir total no carrinho
             cartTotalE1.innerText = total.toFixed(2);
-
         }
-
-        // função para adicionar itens ao carrinho
-        function addToCart(name,price){
+    
+        // Função para adicionar itens ao carrinho
+        function addToCart(name, price, image) {
             const item = {
-                name:name,
-                price:price
+                name: name,
+                price: price,
+                image: image
             };
             cart.push(item); // Adicionar o item ao array do carrinho
+            saveCart(); // Salvar o carrinho no localStorage
             updateCart(); // Atualizar o carrinho depois de adicionar o item
         }
-
-        //Adicionar evento de clique nos botões  "adcionar ao carrinho"
-        document.querySelectorAll('.addToCartBtn'). forEach(button => {
-            button.addEventListener('click',function(){
-                const name = this.getAttribute('data-name'); //Pegar o nome do produto
-                const price = this.getAttribute('data-price'); // pegar o preço do produto
-                addToCart(name,price); // Chamar a função para adicionar o produto
+    
+        // Função para remover itens do carrinho
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Remover o item pelo índice
+            saveCart(); // Atualizar o localStorage
+            updateCart(); // Atualizar a interface do carrinho
+        }
+    
+        // Adicionar evento de clique nos botões "Adicionar ao Carrinho"
+        document.querySelectorAll('.addToCartBtn').forEach(button => {
+            button.addEventListener('click', function () {
+                const name = this.getAttribute('data-name'); // Pegar o nome do produto
+                const price = this.getAttribute('data-price'); // Pegar o preço do produto
+                const image = this.getAttribute('data-image'); // Pegar a imagem do produto
+                addToCart(name, price, image); // Chamar a função para adicionar o produto
             });
         });
- 
-        
-    </script>
-   
-        
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-        
-    </script>
+    
+        // Inicializar o carrinho ao carregar a página
+        updateCart();
+    </script
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     
 

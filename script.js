@@ -8,6 +8,7 @@ const uploadImage = document.getElementById('uploadImage');
 
 
 
+
 // Configuração da cena, câmera e renderizador
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
@@ -165,6 +166,24 @@ colorPicker.addEventListener('input',(event) => {
         };
         reader.readAsDataURL(file);
     };
+
+    /// canvas celular
+function resizeCanvas(){
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+
+    // dimensões canvas
+    renderer.setSize(width,height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+}
+
+/// chamar a função 
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
 
 });
 
