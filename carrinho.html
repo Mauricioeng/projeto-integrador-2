@@ -2,6 +2,7 @@
 <html lang = "pt-BR">
     <head>
 <html>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="device-width, initial-scale=1.0">
     <title>Carrinho de Compras</title>
@@ -43,7 +44,17 @@
             margin-top: 20px;
 
         }
+        form{
+            text-align: center;
+        }
+        button{
+            color: rgb(0, 0, 0);
+            background-color: rgba(255, 16, 16, 0.775);
+           
+          
+        }
     </style>
+    
     
 </head>
 <body>
@@ -81,7 +92,61 @@
         <p id="emptyCartMessage" class="empty-cart"></p>
     </div>
     <script src="cart.js"></script>
+
+    <form action="config.php" method="POST" id="pedidoform">
+        <h3>Informações do Pedido</h3>
+        <input type="hidden" name="itens_carrinho" id="itensCarrinho">
+
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" required>
+
+        <label for="mensagem"> Mensagem:</label>
+    <textarea id="mensagem" name="mensagem" rows="4" cols="50" required></textarea>
+    <style>
+        #mensagem {
+            width: 15%;
+            height: 45px ;
+            
+            
+           
+        }
+    </style>
+
+        <button  type="submit">Finalizar Pedido</button>
+    </form>
+
+    <script>
+        /// função para carregar o carrinho do local storage
+        function loadCart(){
+            const storedCart = localStorage.getItem('cart');
+            if(storedCart) {
+                return JSON.parse(storedCart);
+            }else {
+                return[];
+            }
+        }
+
+        // evento que captura os itens do carrinho antes do envio do formulario
+        document.getElementById('pedidoform').addEventListener('submit', function(e){
+            const carrinho = loadCart(); // Função que carrega os itens do carrinho
+            document.getElementById('itensCarrinho').value = JSON.stringify(carrinho); //ARMAZENA OS ITENS NO CAMPO OCULTO
+        });
+
+
+    </script>
+
+    
+
+    
     
 </body>    
 </html>    
 </html>
+

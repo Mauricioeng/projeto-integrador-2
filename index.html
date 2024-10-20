@@ -12,6 +12,7 @@
             background: linear-gradient(161deg, #ff000097, #0400ff93 );
             background-repeat: no-repeat;
             background-size: cover;
+            margin: 0; 
         }
         h1{
             color: #ffffff;
@@ -67,15 +68,24 @@ footer p {
     margin: 1;
 }
 
+
        
 
     </style>
+  
+        <head>
+            
+        </head>
+        
+    </head>
+    
 
 
     
 
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="pagina_inicial.html" >
@@ -104,6 +114,12 @@ footer p {
     
     <div class="container text-center">
         <h1>Personalize Sua Caneca 3D</h1>
+        <p style="color: #f1ebeb;">
+            <img src="R.png" alt="Lâmpada" style="width: 45px; height: auto; vertical-align: middle; margin-right: 5px;">
+            Diga "GIRAR" para girar a caneca, "PARAR" para parar o giro, "APROXIMAR" para aproximar a câmera, "AFASTAR" para afastar a câmera e "MUDAR COR" para alterar a cor da caneca.
+        </p>
+        
+
 
         <div id="controls" class="row justify-content-center">
             <div class="col-md-6">
@@ -115,7 +131,12 @@ footer p {
                 <input type="file" id="uploadImage" class="form-control" accept="image/*">
             </div>
         </div>
+        
+        
+
+
             <canvas id="cupCanvas" width="600" height="600"></canvas>
+           
         
 
     </div>
@@ -130,6 +151,11 @@ footer p {
      <!-- Importação do Three.js -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+
+
  
      <script src="script.js"></script>
     
