@@ -1,3 +1,7 @@
+
+
+
+
 // FUNÇÃO PARA CARREGAR O CARRINHO DO LOCALSTORAGE
 function loadCart() {
     const storedCart = localStorage.getItem('cart');
